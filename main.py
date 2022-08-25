@@ -111,7 +111,7 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, note_ch, note_en):
+def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather_ckj, max_temperature_hph, max_temperature_ckj, min_temperature_hph, min_temperature_ckj, note_ch, note_en):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -141,20 +141,36 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
                 "value": "{} {}".format(today, week),
                 "color": get_color()
             },
-            "city": {
-                "value": city_name,
+            "city_hph": {
+                "value": city_hph,
                 "color": get_color()
             },
-            "weather": {
-                "value": weather,
+             "city_ckj": {
+                "value": city_ckj,
                 "color": get_color()
             },
-            "min_temperature": {
-                "value": min_temperature,
+            "weather_hph": {
+                "value": weather_hph,
                 "color": get_color()
             },
-            "max_temperature": {
-                "value": max_temperature,
+            "min_temperature_hph": {
+                "value": min_temperature_hph,
+                "color": get_color()
+            },
+            "max_temperature_hph": {
+                "value": max_temperature_hph,
+                "color": get_color()
+            },
+            "weather_ckj": {
+                "value": weather_ckj,
+                "color": get_color()
+            },
+            "min_temperature_ckj": {
+                "value": min_temperature_ckj,
+                "color": get_color()
+            },
+            "max_temperature_ckj": {
+                "value": max_temperature_ckj,
                 "color": get_color()
             },
             "love_day": {
@@ -175,9 +191,9 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
         # 获取距离下次生日的时间
         birth_day = get_birthday(value["birthday"], year, today)
         if birth_day == 0:
-            birthday_data = "今天{}生日哦, 祝{}生日快乐, 好耶！".format(value["name"], value["name"])
+            birthday_data = "今天{}生日哦, 好耶！".format(value["name"], value["name"])
         elif birth_day < 30 :
-            birthday_data = "还有{}天就过生日啦, 该去准备礼物3嘿嘿..".format(birth_day)
+            birthday_data = "还有{}天就过生日3, 该去准备礼物3嘿嘿..".format(birth_day)
         else:
             birthday_data = "距离{}的生日还有{}天哼哼.".format(value["name"], birth_day)
         # 将生日数据插入data
