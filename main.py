@@ -220,11 +220,19 @@ if __name__ == "__main__":
     # 传入省份和市获取天气信息
     province, city = config["province2"], config["city2"]
     weather, max_temperature, min_temperature = get_weather(province, city)
+    city_hph = city
+    weather_hph = weather
+    max_temperature_hph = max_temperature
+    min_temperature_hph = min_temperature
     province, city = config["province1"], config["city1"]
     weather, max_temperature, min_temperature = get_weather(province, city)
+    city_ckj = city
+    weather_ckj = weather
+    max_temperature_ckj = max_temperature
+    min_temperature_ckj = min_temperature
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
+        send_message(user, accessToken, city_hph, city_ckj, weather_hph, weather_ckj, max_temperature_hph, max_temperature_ckj, min_temperature_hph, min_temperature_ckj, note_ch, note_en)
     os.system("pause")
