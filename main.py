@@ -153,26 +153,27 @@ def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather
                 "value": weather_hph,
                 "color": get_color()
             },
-            "min_temperature_hph": {
-                "value": min_temperature_hph,
+            "weather_ckj": {
+                "value": weather_ckj,
                 "color": get_color()
             },
             "max_temperature_hph": {
                 "value": max_temperature_hph,
                 "color": get_color()
             },
-            "weather_ckj": {
-                "value": weather_ckj,
+            "max_temperature_ckj": {
+                "value": max_temperature_ckj,
+                "color": get_color()
+            },
+            "min_temperature_hph": {
+                "value": min_temperature_hph,
                 "color": get_color()
             },
             "min_temperature_ckj": {
                 "value": min_temperature_ckj,
                 "color": get_color()
             },
-            "max_temperature_ckj": {
-                "value": max_temperature_ckj,
-                "color": get_color()
-            },
+            
             "love_day": {
                 "value": love_days,
                 "color": get_color()
@@ -192,7 +193,7 @@ def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather
         birth_day = get_birthday(value["birthday"], year, today)
         if birth_day == 0:
             birthday_data = "今天{}生日哦, 好耶！".format(value["name"], value["name"])
-        elif birth_day < 30 :
+        elif (int)birth_day < 30 :
             birthday_data = "还有{}天就过生日3, 该去准备礼物3嘿嘿..".format(birth_day)
         else:
             birthday_data = "距离{}的生日还有{}天哼哼.".format(value["name"], birth_day)
