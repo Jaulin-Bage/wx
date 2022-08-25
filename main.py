@@ -175,9 +175,11 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
         # 获取距离下次生日的时间
         birth_day = get_birthday(value["birthday"], year, today)
         if birth_day == 0:
-            birthday_data = "今天{}生日哦，祝{}生日快乐！".format(value["name"], value["name"])
+            birthday_data = "今天{}生日哦, 祝{}生日快乐, 好耶！".format(value["name"], value["name"])
+        elif birth_day < 30 :
+            birthday_data = "还有{}天就过生日啦, 该去准备礼物3嘿嘿..".format(birth_day)
         else:
-            birthday_data = "距离{}的生日还有{}天".format(value["name"], birth_day)
+            birthday_data = "距离{}的生日还有{}天哼哼.".format(value["name"], birth_day)
         # 将生日数据插入data
         data["data"][key] = {"value": birthday_data, "color": get_color()}
     headers = {
@@ -216,7 +218,9 @@ if __name__ == "__main__":
     # 接收的用户
     users = config["user"]
     # 传入省份和市获取天气信息
-    province, city = config["province"], config["city"]
+    province, city = config["province2"], config["city2"]
+    weather, max_temperature, min_temperature = get_weather(province, city)
+    province, city = config["province1"], config["city1"]
     weather, max_temperature, min_temperature = get_weather(province, city)
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
