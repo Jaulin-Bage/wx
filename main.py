@@ -111,14 +111,47 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather_ckj, max_temperature_hph, max_temperature_ckj, min_temperature_hph, min_temperature_ckj, note_ch, note_en):
+def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather_ckj, max_temperature_hph,
+                 max_temperature_ckj, min_temperature_hph, min_temperature_ckj, note_ch, note_en):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
     month = localtime().tm_mon
     day = localtime().tm_mday
+    if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+        if day==31:
+            day=1
+            month += 1
+            if month == 13:
+                month == 1
+                year += 1
+        else :
+            day += 1
+    elif month==4 or month==6 or month==9 or month==11 :
+        if day==30:
+            day=1
+            month += 1
+            if month == 13:
+                month == 1
+                year += 1
+    else :# feb
+        if year%4 == 0 :
+            if day == 29:
+                day=1
+                month+=1
+            else:
+                day+=1
+        else:
+            if day==28:
+                day=1
+                month+=1
+            else :
+                day+=1
+
+
+
     today = datetime.date(datetime(year=year, month=month, day=day))
-    week = week_list[today.isoweekday() % 7]
+    week = week_list[(today.isoweekday()) % 7]
     # 获取在一起的日子的日期格式
     love_year = int(config["love_date"].split("-")[0])
     love_month = int(config["love_date"].split("-")[1])
@@ -145,7 +178,7 @@ def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather
                 "value": city_hph,
                 "color": get_color()
             },
-             "city_ckj": {
+            "city_ckj": {
                 "value": city_ckj,
                 "color": get_color()
             },
@@ -173,7 +206,7 @@ def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather
                 "value": min_temperature_ckj,
                 "color": get_color()
             },
-            
+
             "love_day": {
                 "value": love_days,
                 "color": get_color()
@@ -193,7 +226,7 @@ def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather
         birth_day = get_birthday(value["birthday"], year, today)
         if birth_day == 0:
             birthday_data = "今天{}生日哦, 好耶！".format(value["name"], value["name"])
-        elif int(birth_day) < 30 :
+        elif int(birth_day) < 30:
             birthday_data = "还有{}天就过生日3, 该去准备礼物3嘿嘿..".format(birth_day)
         else:
             birthday_data = "距离{}的生日还有{}天哼哼.".format(value["name"], birth_day)
@@ -251,5 +284,6 @@ if __name__ == "__main__":
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city_hph, city_ckj, weather_hph, weather_ckj, max_temperature_hph, max_temperature_ckj, min_temperature_hph, min_temperature_ckj, note_ch, note_en)
+        send_message(user, accessToken, city_hph, city_ckj, weather_hph, weather_ckj, max_temperature_hph,
+                     max_temperature_ckj, min_temperature_hph, min_temperature_ckj, note_ch, note_en)
     os.system("pause")
