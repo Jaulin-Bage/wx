@@ -118,37 +118,38 @@ def send_message(to_user, access_token, city_hph, city_ckj, weather_hph, weather
     year = localtime().tm_year
     month = localtime().tm_mon
     day = localtime().tm_mday
-    if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
-        if day==31:
-            day=1
+    if month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12:
+        if day == 31:
+            day = 1
             month += 1
             if month == 13:
                 month == 1
                 year += 1
-        else :
-            day += 1
-    elif month==4 or month==6 or month==9 or month==11 :
-        if day==30:
-            day=1
-            month += 1
-            if month == 13:
-                month == 1
-                year += 1
-    else :# feb
-        if year%4 == 0 :
-            if day == 29:
-                day=1
-                month+=1
-            else:
-                day+=1
         else:
-            if day==28:
-                day=1
-                month+=1
-            else :
-                day+=1
-
-
+            day += 1
+    elif month == 4 or month == 6 or month == 9 or month == 11:
+        if day == 30:
+            day = 1
+            month += 1
+            if month == 13:
+                month == 1
+                year += 1
+            
+        else:
+            day += 1
+    else:  # feb
+        if year % 4 == 0:
+            if day == 29:
+                day = 1
+                month += 1
+            else:
+                day += 1
+        else:
+            if day == 28:
+                day = 1
+                month += 1
+            else:
+                day += 1
 
     today = datetime.date(datetime(year=year, month=month, day=day))
     week = week_list[(today.isoweekday()) % 7]
